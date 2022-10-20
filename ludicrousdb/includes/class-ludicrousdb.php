@@ -1518,7 +1518,11 @@ class LudicrousDB extends wpdb {
 		}
 
 		if ( true === $this->use_mysqli ) {
-			$result = mysqli_query( $dbh, $query );
+			try {
+				$result = mysqli_query( $dbh, $query );
+			} catch ( \mysqli_sql_exception $e ) {
+				return false;
+			}
 		} else {
 			$result = mysql_query( $query, $dbh );
 		}
